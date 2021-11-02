@@ -23,9 +23,13 @@ class Bids(models.Model):
     pass
 
 class Comments(models.Model):
-
-    pass
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    time =models.DateTimeField(auto_now=True)
+    comments=models.TextField()
+    
+    def __str__(self):
+        return f"{self.id}"
+    
 
 class Auctions(models.Model):
-
-    pass
+    pass    
