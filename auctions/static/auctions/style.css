@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css2?family=Oxygen&display=swap");
+:focus {
+  outline: none;
+}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 10px;
+  background: #6190e8; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #a7bfe8,
+    #6190e8
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #a7bfe8,
+    #6190e8
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.form,
+.form div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.form div {
+  height: 65vh;
+  width: 100%;
+}
+h1,
+h2 {
+  font-family: "Oxygen", sans-serif;
+}
+.form input[type="number"]:focus-visible,
+.form input[type="text"]:focus-visible,
+.form input[type="url"]:focus-visible {
+  border: 2px solid #007bff;
+}
+
+.form input[type="text"],
+.form input[type="number"],
+.form input[type="url"],
+.form select {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #007bff;
+  max-width: 450px;
+  width: 50%;
+  min-width: 300px;
+}
+
+input[type="submit"] {
+  padding-inline: 36px;
+  font-weight: bold;
+  border-radius: 8px;
+}

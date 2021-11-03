@@ -1,0 +1,28 @@
+{%extends "auctions/layout.html"%} {%block body%}
+<form action="{% url 'create' %}" method="post" class="form">
+  <div>
+    <h2>Create Auction</h2>
+
+    {% csrf_token %}
+    <input type="text" placeholder="Product Name" name="name" required />
+    <input type="text" placeholder="Description" name="description" />
+    <input type="url" placeholder="Image URL" name="imageURL" required />
+    <select name="category" required>
+      <option value="" disabled selected>Select category</option>
+      {% for category in allCategory %}
+      <option value="{{ category }}">{{category}}</option>
+      {%endfor%}
+    </select>
+    <input
+      type="number"
+      placeholder="Add Price"
+      min="0"
+      name="price"
+      required
+      step="any"
+    />
+    <input type="submit" class="btn btn-primary" value="Add" />
+  </div>
+</form>
+
+{%endblock%}

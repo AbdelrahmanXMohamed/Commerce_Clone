@@ -3,8 +3,8 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-
-from .models import User
+from django.contrib.auth.decorators import login_required
+from .models import User,Auctions,Category
 
 
 def index(request):
@@ -61,3 +61,21 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html")
+
+
+@login_required
+def create(request):
+    if request.method=="POST":
+        print(request.user)
+        user = request.user
+        name=request.POST["name"]
+        description=request.POST["description"]
+        imageURL=request.POST["imageURL"]
+        category=Category.objects.get(name=request.POST["category"])
+        price=request.POST["price"]
+        Auctions.objects.create(user=user,name=name,description=description,imageURL=imageURL,category=category,price=price)
+        return HttpResponseRedirect(reverse("index"))
+    allCategory=Category.objects.all()
+    return render(request,"auctions/create.html",{
+        "allCategory":allCategory
+    })
