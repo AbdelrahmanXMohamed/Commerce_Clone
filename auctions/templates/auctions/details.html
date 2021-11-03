@@ -1,7 +1,6 @@
 {% extends "auctions/layout.html" %} {% block body %}
 <h2>Active Listings</h2>
 <div class="frame">
-  {% for data in allAuction%}
   <div class="MyCard">
     <img src="{{data.imageURL}}" alt="{{data.name}}" />
     <div class="left_card">
@@ -10,6 +9,5 @@
       <p>Created at {{data.created_at}}</p>
     </div>
   </div>
-  {%endfor%}
 </div>
 {% endblock %}

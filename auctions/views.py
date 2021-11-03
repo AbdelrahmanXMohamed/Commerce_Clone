@@ -8,7 +8,8 @@ from .models import User,Auctions,Category
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    allAuction=Auctions.objects.all()
+    return render(request, "auctions/index.html",{"allAuction":allAuction})
 
 
 def login_view(request):
@@ -73,9 +74,32 @@ def create(request):
         imageURL=request.POST["imageURL"]
         category=Category.objects.get(name=request.POST["category"])
         price=request.POST["price"]
-        Auctions.objects.create(user=user,name=name,description=description,imageURL=imageURL,category=category,price=price)
+        if category:
+            Auctions.objects.create(user=user,name=name,description=description,imageURL=imageURL,category=category,price=price)
         return HttpResponseRedirect(reverse("index"))
     allCategory=Category.objects.all()
     return render(request,"auctions/create.html",{
         "allCategory":allCategory
     })
+
+def details(request,product):
+    if request.method=="GET":
+        retrieveData=Auctions.objects.get(pk=product)
+        print(retrieveData)
+        return render(request,"auctions/details.html",{"data":retrieveData})
+
+@login_required
+def add_WatchList(request):
+    pass
+
+
+@login_required
+def elements_from_watchList(request):
+    pass
+
+@login_required
+def add_comment(request):
+    pass
+
+def bid(request):
+    pass

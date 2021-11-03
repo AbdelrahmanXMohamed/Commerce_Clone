@@ -60,3 +60,17 @@ input[type="submit"] {
   font-weight: bold;
   border-radius: 8px;
 }
+div.frame {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+div.frame div.MyCard {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+  align-items: center;
+}
+div.frame div.MyCard div.left_card {
+  padding: 10px;
+}
