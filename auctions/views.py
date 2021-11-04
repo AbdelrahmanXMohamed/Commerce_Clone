@@ -4,12 +4,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .models import User,Auctions,Category
+from .models import User,Auctions,Category,Watchlist
 
 
 def index(request):
     allAuction=Auctions.objects.all()
-    return render(request, "auctions/index.html",{"allAuction":allAuction})
+    Watchlists=Watchlist.objects.all()
+    return render(request, "auctions/index.html",{"allAuction":allAuction,"WatchLists":Watchlists})
 
 
 def login_view(request):
@@ -67,7 +68,6 @@ def register(request):
 @login_required
 def create(request):
     if request.method=="POST":
-        print(request.user)
         user = request.user
         name=request.POST["name"]
         description=request.POST["description"]
@@ -75,7 +75,7 @@ def create(request):
         category=Category.objects.get(name=request.POST["category"])
         price=request.POST["price"]
         if category:
-            Auctions.objects.create(user=user,name=name,description=description,imageURL=imageURL,category=category,price=price)
+            Auctions.objects.create(user=user,name=name,description=description,imageURL=imageURL,category=category,start_price=price)
         return HttpResponseRedirect(reverse("index"))
     allCategory=Category.objects.all()
     return render(request,"auctions/create.html",{
@@ -89,8 +89,19 @@ def details(request,product):
         return render(request,"auctions/details.html",{"data":retrieveData})
 
 @login_required
-def add_WatchList(request):
-    pass
+def add_WatchList(request,id):
+    print(id)
+    if request.method == "POST":
+        user=request.user
+        getAuction=Auctions.objects.get(id=id)
+        try:
+            data=Watchlist.objects.get(user=user,auction=getAuction)
+            if data:
+                data.delete()
+                return HttpResponseRedirect(reverse("index"))
+        except :
+            Watchlist.objects.create(user=user,auction=getAuction)
+        return HttpResponseRedirect(reverse("index"))
 
 
 @login_required

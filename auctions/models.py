@@ -32,7 +32,7 @@ class Auctions(models.Model):
     created_at=models.DateTimeField(default=timezone.now)
     description=models.TextField(blank=True)
     category=models.ForeignKey(Category,on_delete=models.CASCADE,null=True,blank=True)
-    price=models.DecimalField(validators=[MinValueValidator(0.01)],max_digits=7,decimal_places=2,default=1)
+    start_price=models.DecimalField(validators=[MinValueValidator(0.01)],max_digits=7,decimal_places=2,default=1)
     state=models.BooleanField(default=True)
     def __str__(self):
         return f"{self.user} is creating {self.name}"
@@ -48,9 +48,13 @@ class Comments(models.Model):
         return f"{self.user} is comments {self.auction}"
 
 class Bids(models.Model):
-    max_price=models.DecimalField(max_digits=7,decimal_places=2,default=0)
+    price=models.DecimalField(max_digits=7,decimal_places=2,default=0)
     user=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     auction=models.ForeignKey(Auctions,on_delete=models.CASCADE,null=True)
-    number_of_bidder=models.IntegerField(validators=[MinValueValidator(0)],default=0)
+
     def __str__(self):
         return f"{self.user} bids on {self.auction} by {self.max_price}"
+class Watchlist(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    auction=models.ForeignKey(Auctions,on_delete=models.CASCADE,null=True)
+    

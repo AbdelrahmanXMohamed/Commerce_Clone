@@ -1,4 +1,4 @@
-{% extends "auctions/layout.html" %} {% block body %}
+{% extends "auctions/layout2.html" %} {% block body %}
 <h2>Active Listings</h2>
 <div class="frame">
   {% for data in allAuction%}
@@ -8,6 +8,15 @@
       <h4><a href="{% url  'details' data.pk%}">{{ data.name}}</a></h4>
       <p>Created by {{ data.user.username}}</p>
       <p>Created at {{data.created_at}}</p>
+      <p>Starting price {{data.start_price}} $</p>
+      {% if data in WatchLists.auction%}
+      <form method="post" action="{% url 'watchlist' data.pk %}">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-primary" value="Add to Watchlist" />
+      </form>
+      {% else %}
+      <p>added</p>
+      {%endif%}
     </div>
   </div>
   {%endfor%}
