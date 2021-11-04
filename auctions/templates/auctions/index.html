@@ -9,7 +9,7 @@
       <p>Created by {{ data.user.username}}</p>
       <p>Created at {{data.created_at}}</p>
       <p>Starting price {{data.start_price}} $</p>
-      {% if data in WatchLists.auction%}
+      {% if data.id not in WatchLists %}
       <form method="post" action="{% url 'watchlist' data.pk %}">
         {% csrf_token %}
         <input type="submit" class="btn btn-primary" value="Add to Watchlist" />

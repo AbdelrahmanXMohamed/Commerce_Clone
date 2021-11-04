@@ -9,9 +9,15 @@ from .models import User,Auctions,Category,Watchlist
 
 def index(request):
     allAuction=Auctions.objects.all()
-    Watchlists=Watchlist.objects.all()
-    return render(request, "auctions/index.html",{"allAuction":allAuction,"WatchLists":Watchlists})
-
+    try:
+        user=request.user
+        Watchlists=Watchlist.objects.filter(user=user)
+        watched=[ i.auction.id for i in Watchlists]
+        print(watched)
+        
+        return render(request, "auctions/index.html",{"allAuction":allAuction,"WatchLists":watched,"currentUser":user})
+    except:
+        return render(request, "auctions/index.html",{"allAuction":allAuction})
 
 def login_view(request):
     if request.method == "POST":
