@@ -22,12 +22,12 @@
         <a  href="{% url 'index' %}">Active Listings</a>
       </li>
             <li >
-        <a  href="{% url 'index' %}">Categories</a>
+        <a  href="{% url 'category' %}">Categories</a>
       </li>
       {% if user.is_authenticated %}
 
       <li >
-        <a  href="{% url 'index' %}">Watchlist</a>
+        <a  href="{% url 'mywatchlist' %}">Watchlist</a>
       </li>
       <li >
         <a  href="{% url 'create' %}">Create List</a>

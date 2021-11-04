@@ -9,13 +9,20 @@
       <p>Created by {{ data.user.username}}</p>
       <p>Created at {{data.created_at}}</p>
       <p>Starting price {{data.start_price}} $</p>
-      {% if data.id not in WatchLists %}
+      {% if data.id not in WatchLists or not user.is_authenticated %}
       <form method="post" action="{% url 'watchlist' data.pk %}">
         {% csrf_token %}
         <input type="submit" class="btn btn-primary" value="Add to Watchlist" />
       </form>
       {% else %}
-      <p>added</p>
+      <form method="post" action="{% url 'watchlist' data.pk %}">
+        {% csrf_token %}
+        <input
+          type="submit"
+          class="btn btn-danger"
+          value="Remove for WatchList"
+        />
+      </form>
       {%endif%}
     </div>
   </div>

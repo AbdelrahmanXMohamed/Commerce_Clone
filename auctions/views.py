@@ -94,10 +94,11 @@ def details(request,product):
         print(retrieveData)
         return render(request,"auctions/details.html",{"data":retrieveData})
 
-@login_required
-def add_WatchList(request,id):
-    print(id)
+@login_required(login_url="/login")
+def functions_WatchList(request,id):
+
     if request.method == "POST":
+        
         user=request.user
         getAuction=Auctions.objects.get(id=id)
         try:
@@ -110,9 +111,32 @@ def add_WatchList(request,id):
         return HttpResponseRedirect(reverse("index"))
 
 
-@login_required
-def elements_from_watchList(request):
-    pass
+@login_required(login_url="/login")
+def WatchList_remove(request,id):
+    if request.method == "POST":
+        user=request.user
+        getAuction=Auctions.objects.get(id=id)
+        data=Watchlist.objects.get(user=user,auction=getAuction)
+        data.delete()
+        return HttpResponseRedirect(reverse("mywatchlist"))
+
+
+
+
+@login_required(login_url="/login")
+def WatchListPage(request):
+    user=request.user
+    mywatchinglist=Watchlist.objects.filter(user=user)
+    return render(request,"auctions/watchlist.html",{"mywatchinglist":mywatchinglist})
+
+def CategoryPage(request):
+    AllCategory=Category.objects.all()
+    return render(request,"auctions/category.html",{"AllCategory":AllCategory})
+    
+def Categoryitems(request,id):
+    category=Category.objects.get(pk=id)
+    AllAuctionItem=Auctions.objects.filter(category=category)
+    return render(request,"auctions/category_Items.html",{"AllAuctionItem":AllAuctionItem})
 
 @login_required
 def add_comment(request):

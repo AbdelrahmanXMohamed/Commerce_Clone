@@ -49,12 +49,12 @@ class Comments(models.Model):
 
 class Bids(models.Model):
     price=models.DecimalField(max_digits=7,decimal_places=2,default=0)
-    user=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    winner=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     auction=models.ForeignKey(Auctions,on_delete=models.CASCADE,null=True)
+    
 
     def __str__(self):
         return f"{self.user} bids on {self.auction} by {self.max_price}"
 class Watchlist(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     auction=models.ForeignKey(Auctions,on_delete=models.CASCADE,null=True)
-    

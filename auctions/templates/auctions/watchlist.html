@@ -1,0 +1,27 @@
+{% extends "auctions/layout2.html" %} {% block body %}
+<h2>Watching List</h2>
+<div class="frame">
+  {% for data in mywatchinglist%}
+  <div class="MyCard">
+    <img src="{{data.auction.imageURL}}" alt="{{data.auction.name}}" />
+    <div class="left_card">
+      <h4>
+        <a href="{% url  'details' data.auction.pk%}">{{ data.auction.name}}</a>
+      </h4>
+      <p>Created by {{ data.user.username}}</p>
+      <p>Created at {{data.auction.created_at}}</p>
+      <p>Starting price {{data.auction.start_price}} $</p>
+
+      <form method="post" action="{% url 'watchlistremove' data.auction.pk %}">
+        {% csrf_token %}
+        <input
+          type="submit"
+          class="btn btn-danger"
+          value="Remove for WatchList"
+        />
+      </form>
+    </div>
+  </div>
+  {%endfor%}
+</div>
+{% endblock %}
