@@ -14,10 +14,11 @@ div.frame {
     margin: 10px;
     align-items: center;
     justify-content: flex-end;
-    background: #00275e;
+    background-color: white;
     border-radius: 10px;
     position: relative;
     min-height: 350px;
+    box-shadow: inset 0px 0px 8px #00000040;
     img {
       position: absolute;
       top: 20px;
@@ -25,7 +26,8 @@ div.frame {
       max-height: 100px;
       border-radius: 10px;
       transition: 0.5s;
-      background-color: white;
+      background: #00275e;
+
       &:hover {
         transform: scale(1.3);
       }
