@@ -4,56 +4,54 @@
 <html lang="en">
   <head>
     <title>{% block title %}Auctions{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
-    <link href="{% static 'auctions/nav.css' %}" rel="stylesheet" />
-    <link href="{% static 'auctions/auctions.css' %}" rel="stylesheet" />
-
+    <link href="{% static 'auctions/styles.css' %}" rel="stylesheet" />
+    <link href="{% static 'auctions/navs.css' %}" rel="stylesheet" />
+    {% block style %} {%endblock%}
   </head>
   <body>
-    <div>
-        <nav>
-            <ul>
-      <li >
-        <a  href="{% url 'index' %}">Active Listings</a>
-      </li>
-            <li >
-        <a  href="{% url 'category' %}">Categories</a>
-      </li>
-      {% if user.is_authenticated %}
+    <nav>
+      <ul>
+        <li>
+          <a href="{% url 'index' %}">Active Listings</a>
+        </li>
+        <li>
+          <a href="{% url 'category' %}">Categories</a>
+        </li>
+        {% if user.is_authenticated %}
 
-      <li >
-        <a  href="{% url 'mywatchlist' %}">Watchlist</a>
-      </li>
-      <li >
-        <a  href="{% url 'create' %}">Create List</a>
-      </li>
-      <div class="left">
-        <li  >
-            <strong>
-                {{ user.username }}
-            </strong>
-      </li>
-      <li  >
-        <a  href="{% url 'logout' %}">Log Out</a>
-      </li>
-      </div>
-      {% else %}
-      <div class="left">
-      <li >
-        <a   href="{% url 'login' %}">Log In</a>
-      </li>
-      <li >
-        <a  href="{% url 'register' %}">Register</a>
-      </li>
-      </div>
-      {% endif %}           
-     </ul>
-        </nav>
+        <li>
+          <a href="{% url 'mywatchlist' %}">Watchlist</a>
+        </li>
+        <li>
+          <a href="{% url 'create' %}">Create List</a>
+        </li>
+        <div class="left">
+          <li>
+            <strong> {{ user.username }} </strong>
+          </li>
+          <li>
+            <a href="{% url 'logout' %}">Log Out</a>
+          </li>
+        </div>
+        {% else %}
+        <div class="left">
+          <li>
+            <a href="{% url 'login' %}">Log In</a>
+          </li>
+          <li>
+            <a href="{% url 'register' %}">Register</a>
+          </li>
+        </div>
+        {% endif %}
+      </ul>
+    </nav>
 
     {% block body %} {% endblock %}
   </body>

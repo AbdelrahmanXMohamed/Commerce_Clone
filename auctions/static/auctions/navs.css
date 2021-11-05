@@ -6,17 +6,19 @@
 nav {
   background-color: black; }
   nav ul {
-    display: flex; }
+    display: flex;
+    flex-wrap: wrap; }
     nav ul li {
       list-style: none;
       padding: 20px;
       white-space: nowrap; }
       nav ul li strong {
-        color: white; }
+        color: #feb729; }
       nav ul li a {
-        color: white; }
+        color: #feb729;
+        font-weight: 600; }
         nav ul li a:hover {
-          color: white;
+          color: #feb729;
           text-decoration: none; }
     nav ul .left {
       flex-grow: 2;
@@ -24,4 +26,4 @@ nav {
       flex-direction: row;
       justify-content: flex-end; }
 
-/*# sourceMappingURL=nav.css.map */
+/*# sourceMappingURL=navs.css.map */

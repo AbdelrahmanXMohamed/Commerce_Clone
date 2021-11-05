@@ -1,0 +1,45 @@
+h2 {
+  text-align: center;
+}
+div.frame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  flex-wrap: wrap;
+
+  div.MyCard {
+    display: flex;
+    flex-direction: row;
+    margin: 0 0 30px 0;
+    justify-content: space-around;
+    img {
+      transition: 0.5s;
+      background-color: transparent;
+      width: 150px;
+      height: fit-content;
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+    div.watch {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+    div.left_card {
+      align-self: center;
+      padding: 10px;
+      p {
+        white-space: nowrap;
+        color: #1e1e1e;
+      }
+      a {
+        color: #6d98ab;
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}

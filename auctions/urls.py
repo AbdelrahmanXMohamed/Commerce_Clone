@@ -13,5 +13,7 @@ urlpatterns = [
     path("watchlist/<int:id>", views.functions_WatchList, name="watchlist"),
     path("details/<int:product>", views.details, name="details"),
     path("category",views.CategoryPage,name="category"),
-    path("category/<int:id>",views.Categoryitems,name="categoryitem")
+    path("category/<int:id>",views.Categoryitems,name="categoryitem"),
+    path("add_comment/<int:id>",views.add_comment,name="add_comment"),
+    path("add_bids/<int:id>",views.bid, name="add_bids")
 ]

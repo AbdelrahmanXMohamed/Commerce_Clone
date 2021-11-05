@@ -1,21 +1,14 @@
-{% extends "auctions/layout2.html" %} {% block body %}
-<h2>Categories</h2>
+{% extends "auctions/layout2.html" %} {% load static %} {% block style %}
+<link href="{% static 'auctions/category.css' %}" rel="stylesheet" />
+
+{%endblock%} {% block body %}
 <center>
-  <ul
-    style="
-      list-style-type: none;
-      display: grid;
-      justify-content: center;
-      grid-gap: 10px;
-      place-content: center;
-      height: 50vh;
-    "
-  >
+  <h2>Categories</h2>
+
+  <ul class="categories">
     {% for category in AllCategory%}
     <a href="{%url 'categoryitem' category.id %}">
-      <li style="padding: 10px; border: 1px solid black; white-space: nowrap">
-        {{category}}
-      </li>
+      <li>{{category}}</li>
     </a>
     {%endfor%}
   </ul>

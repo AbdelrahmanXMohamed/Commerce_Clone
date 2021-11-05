@@ -2,25 +2,22 @@
 :focus {
   outline: none;
 }
-* {
-  box-sizing: border-box;
-}
-
+/*
 body {
   padding: 10px;
-  background: #6190e8; /* fallback for old browsers */
+  background: #6190e8; /*fallback for old browsers 
   background: -webkit-linear-gradient(
     to right,
     #a7bfe8,
     #6190e8
-  ); /* Chrome 10-25, Safari 5.1-6 */
+  ); /* Chrome 10-25, Safari 5.1-6
   background: linear-gradient(
     to right,
     #a7bfe8,
     #6190e8
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+
 }
-
+*/
 .form,
 .form div {
   display: flex;
@@ -39,7 +36,7 @@ h2 {
 .form input[type="number"]:focus-visible,
 .form input[type="text"]:focus-visible,
 .form input[type="url"]:focus-visible {
-  border: 2px solid #007bff;
+  border: 2px solid #feb729;
 }
 
 .form input[type="text"],
@@ -49,7 +46,7 @@ h2 {
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 10px;
-  border: 1px solid #007bff;
+  border: 1px solid #feb729;
   max-width: 450px;
   width: 50%;
   min-width: 300px;
@@ -73,4 +70,8 @@ div.frame div.MyCard {
 }
 div.frame div.MyCard div.left_card {
   padding: 10px;
+}
+input.btn.btn-my {
+  background-color: #feb729;
+  color: #fff;
 }

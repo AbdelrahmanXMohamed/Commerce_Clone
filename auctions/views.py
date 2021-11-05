@@ -4,8 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .models import User,Auctions,Category,Watchlist
-
+from .models import User,Auctions,Category,Watchlist,Bids,Comments
 
 def index(request):
     allAuction=Auctions.objects.all()
@@ -91,14 +90,21 @@ def create(request):
 def details(request,product):
     if request.method=="GET":
         retrieveData=Auctions.objects.get(pk=product)
-        print(retrieveData)
-        return render(request,"auctions/details.html",{"data":retrieveData})
+        try:
+            bidsHistoty=Bids.objects.filter(auction=retrieveData).order_by("-price")
+        except :
+            bidsHistoty=[]
+        try:
+            comments=Comments.objects.filter(auction=retrieveData).order_by("-time")
+        except:
+            comments=[]
+
+        return render(request,"auctions/details.html",{"data":retrieveData,"bidsHistoty":bidsHistoty,"comments":comments})
 
 @login_required(login_url="/login")
 def functions_WatchList(request,id):
 
     if request.method == "POST":
-        
         user=request.user
         getAuction=Auctions.objects.get(id=id)
         try:
@@ -120,9 +126,6 @@ def WatchList_remove(request,id):
         data.delete()
         return HttpResponseRedirect(reverse("mywatchlist"))
 
-
-
-
 @login_required(login_url="/login")
 def WatchListPage(request):
     user=request.user
@@ -134,13 +137,26 @@ def CategoryPage(request):
     return render(request,"auctions/category.html",{"AllCategory":AllCategory})
     
 def Categoryitems(request,id):
-    category=Category.objects.get(pk=id)
-    AllAuctionItem=Auctions.objects.filter(category=category)
-    return render(request,"auctions/category_Items.html",{"AllAuctionItem":AllAuctionItem})
+    if request.method=="GET":
+        category=Category.objects.get(pk=id)
+        AllAuctionItem=Auctions.objects.filter(category=category)
+        return render(request,"auctions/category_Items.html",{"AllAuctionItem":AllAuctionItem})
 
-@login_required
-def add_comment(request):
-    pass
+@login_required(login_url="/login")
+def add_comment(request,id):
+    if request.method == "POST":
+        current_user=request.user
+        auction=Auctions.objects.get(pk=id)
+        comment=request.post["Comments"]
+        Comments.objects.create(user=current_user,auction=auction,comment=comment)
+        return HttpResponseRedirect(reverse("details ",args=[id]))
 
-def bid(request):
-    pass
+
+@login_required(login_url="/login")
+def bid(request,id):
+    if request.method == "POST":
+        current_user=request.user
+        auction=Auctions.objects.get(pk=id)
+        price=request.post["price"]
+        Bids.objects.create(winner=current_user,auction=auction,price=price)
+        return HttpResponseRedirect(reverse("details ",args=[id]))

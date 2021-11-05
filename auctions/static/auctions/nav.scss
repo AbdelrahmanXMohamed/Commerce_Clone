@@ -8,18 +8,21 @@ nav {
   background-color: black;
   ul {
     display: flex;
+    flex-wrap: wrap;
 
     li {
       list-style: none;
       padding: 20px;
       white-space: nowrap;
       strong {
-        color: white;
+        color: #feb729;
       }
       a {
-        color: white;
+        color: #feb729;
+        font-weight: 600;
+
         &:hover {
-          color: white;
+          color: #feb729;
           text-decoration: none;
         }
       }

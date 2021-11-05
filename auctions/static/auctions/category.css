@@ -1,0 +1,15 @@
+ul.categories {
+  list-style-type: none;
+  display: grid;
+  justify-content: center;
+  grid-gap: 10px;
+  place-content: center;
+  height: 50vh; }
+  ul.categories a:hover {
+    text-decoration: none; }
+  ul.categories a li {
+    padding: 10px;
+    border: 1px solid black;
+    white-space: nowrap; }
+
+/*# sourceMappingURL=category.css.map */
