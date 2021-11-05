@@ -29,9 +29,7 @@ div.frame {
       div.frame div.MyCard div.left_card p {
         white-space: nowrap;
         color: #1e1e1e; }
-      div.frame div.MyCard div.left_card a {
-        color: #6d98ab; }
-        div.frame div.MyCard div.left_card a:hover {
-          text-decoration: none; }
+      div.frame div.MyCard div.left_card a:hover {
+        text-decoration: none; }
 
 /*# sourceMappingURL=watchlist.css.map */
