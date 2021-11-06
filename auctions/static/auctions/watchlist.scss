@@ -1,18 +1,43 @@
 h2 {
   text-align: center;
 }
+div.Mycontainer {
+  display: grid;
+  grid-template-columns: 0.5fr 5fr 0.5fr;
+  div.side {
+    &.left {
+      align-self: start;
+    }
+    &.right {
+      align-self: end;
+    }
+  }
+}
 div.frame {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 10px;
   flex-wrap: wrap;
+  width: 100%;
+  @media (max-width: 500px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
 
   div.MyCard {
     display: flex;
     flex-direction: row;
     margin: 0 0 30px 0;
     justify-content: space-around;
+    @media (max-width: 500px) {
+      flex-direction: column;
+    }
+
     img {
       transition: 0.5s;
       background-color: transparent;
@@ -20,6 +45,9 @@ div.frame {
       height: fit-content;
       &:hover {
         transform: scale(1.1);
+      }
+      @media (max-width: 500px) {
+        align-self: center;
       }
     }
     div.watch {

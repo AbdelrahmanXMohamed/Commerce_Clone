@@ -1,30 +1,25 @@
-{% extends "auctions/layout.html" %}
+{% extends "auctions/layout2.html" %} {%load static%} {% block style %}
+<link href="{% static 'auctions/signs.css' %}" rel="stylesheet" />
+{% endblock %} {% block body %}
 
-{% block body %}
-
+<form action="{% url 'register' %}" method="post" class="form">
+  {% csrf_token %}
+  <div>
     <h2>Register</h2>
 
     {% if message %}
-        <div>{{ message }}</div>
-    {% endif %}
+    <span
+      class="alert alert-danger"
+      role="alert"
+      style="width: 50%; min-width: 300px; max-width: 450px; text-align: center"
+      >{{ message }}</span
+    >
+    {% endif %} {{form.username}} {{form.email}} {{form.password}}
+    {{form.confirmation}}
 
-    <form action="{% url 'register' %}" method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <input class="form-control" autofocus type="text" name="username" placeholder="Username">
-        </div>
-        <div class="form-group">
-            <input class="form-control" type="email" name="email" placeholder="Email Address">
-        </div>
-        <div class="form-group">
-            <input class="form-control" type="password" name="password" placeholder="Password">
-        </div>
-        <div class="form-group">
-            <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
-        </div>
-        <input class="btn btn-primary" type="submit" value="Register">
-    </form>
-
-    Already have an account? <a href="{% url 'login' %}">Log In here.</a>
+    <input class="btn btn-my" type="submit" value="Register" />
+    <p>Already have an account? <a href="{% url 'login' %}">Log In here.</a></p>
+  </div>
+</form>
 
 {% endblock %}

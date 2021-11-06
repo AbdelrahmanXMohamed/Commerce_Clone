@@ -5,37 +5,35 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .models import User,Auctions,Category,Watchlist,Bids,Comments
+from .forms import LoginForm,RegisterForm
 
 def index(request):
     allAuction=Auctions.objects.all()
     try:
         user=request.user
         Watchlists=Watchlist.objects.filter(user=user)
-        watched=[ i.auction.id for i in Watchlists]
-        print(watched)
-        
+        watched=[ i.auction.id for i in Watchlists]        
         return render(request, "auctions/index.html",{"allAuction":allAuction,"WatchLists":watched,"currentUser":user})
     except:
         return render(request, "auctions/index.html",{"allAuction":allAuction})
 
 def login_view(request):
     if request.method == "POST":
-
+        form=LoginForm(request.POST)
         # Attempt to sign user in
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)
-
-        # Check if authentication successful
-        if user is not None:
-            login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+        if form.is_valid():
+            user = authenticate(request, username=form.cleaned_data["login"], password=form.cleaned_data["password"])      
+            # Check if authentication successful
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect(reverse("index"))
         else:
             return render(request, "auctions/login.html", {
-                "message": "Invalid username and/or password."
+                "message": "Invalid username and/or password.",
+                "form":form
             })
     else:
-        return render(request, "auctions/login.html")
+        return render(request, "auctions/login.html",{"form":LoginForm()})
 
 
 def logout_view(request):
@@ -45,29 +43,31 @@ def logout_view(request):
 
 def register(request):
     if request.method == "POST":
-        username = request.POST["username"]
-        email = request.POST["email"]
-
-        # Ensure password matches confirmation
-        password = request.POST["password"]
-        confirmation = request.POST["confirmation"]
-        if password != confirmation:
-            return render(request, "auctions/register.html", {
-                "message": "Passwords must match."
-            })
-
-        # Attempt to create new user
-        try:
-            user = User.objects.create_user(username, email, password)
-            user.save()
-        except IntegrityError:
-            return render(request, "auctions/register.html", {
-                "message": "Username already taken."
-            })
-        login(request, user)
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            # Ensure password matches confirmation
+            password = form.cleaned_data["password"]
+            confirmation = form.cleaned_data["confirmation"]
+            if password != confirmation:
+                return render(request, "auctions/register.html", {
+                    "message": "Passwords must match.",
+                    "form":form
+                })
+            email = form.cleaned_data["email"]
+            username=form.cleaned_data["username"]
+          # Attempt to create new user
+            try:
+                user = User.objects.create_user(username, email, password)
+                user.save()
+            except IntegrityError:
+                return render(request, "auctions/register.html", {
+                    "message": "Username already taken.",
+                    "form":form
+                })
+            login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
-        return render(request, "auctions/register.html")
+        return render(request, "auctions/register.html",{"form":RegisterForm()})
 
 
 @login_required

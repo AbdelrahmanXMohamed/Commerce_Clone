@@ -1,17 +1,37 @@
 h2 {
   text-align: center; }
 
+div.Mycontainer {
+  display: grid;
+  grid-template-columns: 0.5fr 5fr 0.5fr; }
+  div.Mycontainer div.side.left {
+    align-self: start; }
+  div.Mycontainer div.side.right {
+    align-self: end; }
+
 div.frame {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 10px;
-  flex-wrap: wrap; }
+  flex-wrap: wrap;
+  width: 100%; }
+  @media (max-width: 500px) {
+    div.frame {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: 24px;
+      flex-wrap: wrap; } }
   div.frame div.MyCard {
     display: flex;
     flex-direction: row;
     margin: 0 0 30px 0;
     justify-content: space-around; }
+    @media (max-width: 500px) {
+      div.frame div.MyCard {
+        flex-direction: column; } }
     div.frame div.MyCard img {
       transition: 0.5s;
       background-color: transparent;
@@ -19,6 +39,9 @@ div.frame {
       height: fit-content; }
       div.frame div.MyCard img:hover {
         transform: scale(1.1); }
+      @media (max-width: 500px) {
+        div.frame div.MyCard img {
+          align-self: center; } }
     div.frame div.MyCard div.watch {
       display: flex;
       align-items: baseline;
@@ -32,4 +55,4 @@ div.frame {
       div.frame div.MyCard div.left_card a:hover {
         text-decoration: none; }
 
-/*# sourceMappingURL=watchlist.css.map */
+/*# sourceMappingURL=watchlists.css.map */
