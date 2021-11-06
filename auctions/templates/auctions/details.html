@@ -1,16 +1,103 @@
 {% extends "auctions/layout2.html" %} {% load static%} {% block style %}
-<link href="{% static 'auctions/category.css' %}" rel="stylesheet" />
+<link href="{% static 'auctions/details.css' %}" rel="stylesheet" />
 
 {%endblock%} {% block body %}
-<h2>Active Listings</h2>
-<div class="frame">
-  <div class="MyCard">
-    <img src="{{data.imageURL}}" alt="{{data.name}}" />
-    <div class="left_card">
-      <h4><a href="{% url  'details' data.pk%}">{{ data.name}}</a></h4>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-sm-12">
+      <img src="{{data.imageURL}}" alt="{{data.name}}" style="width: 100%" />
+    </div>
+    <div class="col-md-6 d-flex flex-column justify-content-center">
+      <div class="d-flex flex-row">
+        <h1>{{ data.name}}</h1>
+        {%if user.username == data.user.username and data.state %}
+        <form
+          method="post"
+          action="{% url 'close_bid' data.id %}"
+          class="text-right"
+          style="width: 100%; margin-bottom: 6px"
+        >
+          {% csrf_token %}
+          <input type="submit" class="btn btn-danger" value="Close Bid" />
+        </form>
+        {%endif%}
+      </div>
+
+      <h6>{{data.description}}</h6>
       <p>Created by {{ data.user.username}}</p>
       <p>Created at {{data.created_at}}</p>
+      <p>
+        Starting by
+        <span>
+          {% if bidsHistoty %}
+          <del style="color: #c0c0c0">{{data.start_price}} $</del>
+          {%else%} {{data.start_price}} $ {% endif %}
+        </span>
+      </p>
+      {% if bidsHistoty %}
+      <p>
+        Current price is
+        <span style="color: #feb729">{{bidsHistoty.first.price}} $ </span>
+      </p>
+      {% endif %}
+      
+      {% if data.state %}
+              <form
+        method="post"
+        action="{% url 'add_bids' data.id %}"
+        class="d-flex flex-column"
+      >
+        {% csrf_token %}
+        <input
+          type="number"
+          placeholder="Add your Bid"
+          min="{{ data.start_price }}"
+          name="price"
+          step="any"
+        />
+        <input
+          type="submit"
+          class="btn btn-my align-self-start"
+          value="Place bid"
+        />
+      </form>
+      {%else%}
+        <p>Winner is <span class="winner">{{bidsHistoty.first.winner.username}} </span></p>
+
+      {% endif %}
+
     </div>
   </div>
+  <hr />
+  <div class="col-xs-12">
+    <h3 class="text-center">Bid History</h3>
+    {%for bid in bidsHistoty%}
+    <p class="text-center">{{bid.winner.username}} bids {{bid.price}}</p>
+    {%empty%}
+    <p class="text-center">No bids yet</p>
+    {%endfor%}
+  </div>
+  <hr />
+  <div class="col-xs-12">
+    <h3 class="text-center">Comments</h3>
+    {%for comment in comments%}
+    <p>
+      {{comment.user.username}}
+    </p>
+    <p class="text-center">{{comment.comments}}</p>
+    {%empty%}
+    <p class="text-center">No Comments yet</p>
+    {%endfor%}
+<form method="post" action="{% url 'add_comment' data.pk %}" class="d-flex flex-column">
+        {% csrf_token %}
+
+  <textarea name="Comments">
+</textarea>
+<input type="submit" class="btn btn-my" value="Comment">
+</form>
+  </div>
 </div>
+</div>
+
 {% endblock %}

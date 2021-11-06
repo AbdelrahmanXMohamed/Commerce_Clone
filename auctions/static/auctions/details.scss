@@ -1,0 +1,19 @@
+div.col-md-6 img {
+  padding: 0;
+}
+input[type="number"]:focus-visible {
+  border: 2px solid #feb729;
+}
+input[type="number"] {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #feb729;
+  max-width: 450px;
+  width: 50%;
+  min-width: 300px;
+}
+input.btn.btn-my {
+  background-color: #feb729;
+  color: #fff;
+}

@@ -7,7 +7,8 @@ nav {
   background-color: black; }
   nav ul {
     display: flex;
-    flex-wrap: wrap; }
+    flex-wrap: wrap;
+    margin: 0; }
     nav ul li {
       list-style: none;
       padding: 20px;
@@ -26,4 +27,4 @@ nav {
       flex-direction: row;
       justify-content: flex-end; }
 
-/*# sourceMappingURL=navs.css.map */
+/*# sourceMappingURL=nav.css.map */

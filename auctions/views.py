@@ -22,7 +22,7 @@ def login_view(request):
         form=LoginForm(request.POST)
         # Attempt to sign user in
         if form.is_valid():
-            user = authenticate(request, username=form.cleaned_data["login"], password=form.cleaned_data["password"])      
+            user = authenticate(request, username=form.cleaned_data["username"], password=form.cleaned_data["password"])      
             # Check if authentication successful
             if user is not None:
                 login(request, user)
@@ -38,6 +38,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
+    
     return HttpResponseRedirect(reverse("index"))
 
 
@@ -91,7 +92,7 @@ def details(request,product):
     if request.method=="GET":
         retrieveData=Auctions.objects.get(pk=product)
         try:
-            bidsHistoty=Bids.objects.filter(auction=retrieveData).order_by("-price")
+            bidsHistoty=Bids.objects.filter(auction=retrieveData).order_by("-price")[:10]
         except :
             bidsHistoty=[]
         try:
@@ -147,9 +148,9 @@ def add_comment(request,id):
     if request.method == "POST":
         current_user=request.user
         auction=Auctions.objects.get(pk=id)
-        comment=request.post["Comments"]
-        Comments.objects.create(user=current_user,auction=auction,comment=comment)
-        return HttpResponseRedirect(reverse("details ",args=[id]))
+        comment=request.POST["Comments"]
+        Comments.objects.create(user=current_user,auction=auction,comments=comment)
+        return HttpResponseRedirect(reverse("details",args=[id]))
 
 
 @login_required(login_url="/login")
@@ -157,6 +158,15 @@ def bid(request,id):
     if request.method == "POST":
         current_user=request.user
         auction=Auctions.objects.get(pk=id)
-        price=request.post["price"]
+        price=request.POST["price"]
         Bids.objects.create(winner=current_user,auction=auction,price=price)
-        return HttpResponseRedirect(reverse("details ",args=[id]))
+        return HttpResponseRedirect(reverse("details",args=[id]))
+
+
+@login_required(login_url="/login")
+def close_bid(request,id):
+    if request.method == "POST":
+        currentAuction=Auctions.objects.get(pk=id)
+        currentAuction.state=False
+        currentAuction.save()
+        return HttpResponseRedirect(reverse("details",args=[id]))

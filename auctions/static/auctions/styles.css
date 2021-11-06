@@ -8,3 +8,28 @@ a:hover {
   text-decoration: none;
   color: #feb729;
 }
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: #feb729;
+}
+.btn-primary {
+  color: white;
+  background-color: #00275e;
+  border: 1px solid #00275e;
+}
+.btn-primary:hover {
+  background-color: #00275ecc;
+}
+svg {
+  fill: white;
+}
+.winner {
+  font-weight: bold;
+  color: #feb729;
+}
+.sold {
+  filter: grayscale(100%);
+}
