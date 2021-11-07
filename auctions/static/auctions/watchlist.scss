@@ -41,8 +41,8 @@ div.frame {
     img {
       transition: 0.5s;
       background-color: transparent;
-      width: 150px;
-      height: fit-content;
+      width: 9.375em;
+      height: 9.375em;
       &:hover {
         transform: scale(1.1);
       }

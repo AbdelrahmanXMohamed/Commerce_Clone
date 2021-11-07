@@ -16,13 +16,13 @@ div.frame {
     background-color: white;
     border-radius: 10px;
     position: relative;
-    min-height: 350px;
+    min-height: 21.875em;
     box-shadow: inset 0px 0px 8px #00000040; }
     div.frame div.MyCard img {
       position: absolute;
-      top: 20px;
-      min-width: 100px;
-      max-height: 100px;
+      top: 1.25em;
+      min-width: 6.25em;
+      max-height: 6.25em;
       border-radius: 10px;
       transition: 0.5s; }
       div.frame div.MyCard img:hover {

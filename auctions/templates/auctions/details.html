@@ -26,6 +26,7 @@
 
       <h6>{{data.description}}</h6>
       <p>Created by {{ data.user.username}}</p>
+      <p>Category <a href="{% url 'categoryitem' data.category.id %}"> {{data.category.name}}</a></p>
       <p>Created at {{data.created_at}}</p>
       <p>
         Starting by
@@ -92,7 +93,7 @@
 <form method="post" action="{% url 'add_comment' data.pk %}" class="d-flex flex-column">
         {% csrf_token %}
 
-  <textarea name="Comments">
+  <textarea name="Comments" minlength="2" required>
 </textarea>
 <input type="submit" class="btn btn-my" value="Comment">
 </form>

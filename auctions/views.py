@@ -6,13 +6,14 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .models import User,Auctions,Category,Watchlist,Bids,Comments
 from .forms import LoginForm,RegisterForm
-
+from django.db.models import Max
 def index(request):
     allAuction=Auctions.objects.all()
     try:
         user=request.user
         Watchlists=Watchlist.objects.filter(user=user)
         watched=[ i.auction.id for i in Watchlists]        
+
         return render(request, "auctions/index.html",{"allAuction":allAuction,"WatchLists":watched,"currentUser":user})
     except:
         return render(request, "auctions/index.html",{"allAuction":allAuction})
@@ -141,7 +142,17 @@ def Categoryitems(request,id):
     if request.method=="GET":
         category=Category.objects.get(pk=id)
         AllAuctionItem=Auctions.objects.filter(category=category)
-        return render(request,"auctions/category_Items.html",{"AllAuctionItem":AllAuctionItem})
+        try:
+            user=request.user
+            Watchlists=Watchlist.objects.filter(user=user)
+            watched=[ i.auction.id for i in Watchlists]        
+            return render(request, "auctions/category_Items.html",
+            {"allAuction":AllAuctionItem,
+            "WatchLists":watched,
+            "currentUser":user,
+            "category":category})
+        except:
+            return render(request, "auctions/category_Items.html",{"allAuction":AllAuctionItem,"category":category})
 
 @login_required(login_url="/login")
 def add_comment(request,id):
@@ -160,6 +171,12 @@ def bid(request,id):
         auction=Auctions.objects.get(pk=id)
         price=request.POST["price"]
         Bids.objects.create(winner=current_user,auction=auction,price=price)
+        currentAuction=Auctions.objects.get(pk=id)
+        currentAuction.current_price=price
+        if not currentAuction.have_bids:
+            currentAuction.have_bids=True
+        currentAuction.save()
+        
         return HttpResponseRedirect(reverse("details",args=[id]))
 
 

@@ -3,14 +3,20 @@
 {%endblock%} {% block body %}
 <h2>Active Listings</h2>
 <div class="frame">
-  {% for data in allAuction%}
+  {% for data in allAuction%} {% if data.state %}
   <div class="MyCard">
     <img src="{{data.imageURL}}" alt="{{data.name}}" />
     <div class="left_card">
       <h4><a href="{% url  'details' data.pk%}">{{ data.name}}</a></h4>
       <p>Created by {{ data.user.username}}</p>
       <p>Created at {{data.created_at}}</p>
+      <p>{{data.have_bids}}</p>
+      {% if date.have_bids %}
+      <p>Current price is {{data.current_price}} $</p>
+      {%else%}
       <p>Starting price {{data.start_price}} $</p>
+      {% endif %}
+
       <form method="post" action="{% url 'watchlist' data.pk %}">
         {% csrf_token %}
         <!---->
@@ -48,6 +54,6 @@
       </form>
     </div>
   </div>
-  {%endfor%}
+  {%endif%} {%endfor%}
 </div>
 {% endblock %}

@@ -32,7 +32,9 @@ class Auctions(models.Model):
     created_at=models.DateTimeField(default=timezone.now)
     description=models.TextField(blank=True)
     category=models.ForeignKey(Category,on_delete=models.CASCADE,null=True,blank=True)
-    start_price=models.DecimalField(validators=[MinValueValidator(0.01)],max_digits=7,decimal_places=2,default=1)
+    start_price=models.DecimalField(validators=[MinValueValidator(0.01)],max_digits=7,decimal_places=2,default=0.01)
+    current_price=models.DecimalField(validators=[MinValueValidator(0.01)],max_digits=7,decimal_places=2,default=0.01)
+    have_bids=models.BooleanField(default=False)
     state=models.BooleanField(default=True)
     def __str__(self):
         return f"{self.user} is creating {self.name}"
@@ -54,7 +56,7 @@ class Bids(models.Model):
     
 
     def __str__(self):
-        return f"{self.user} bids on {self.auction} by {self.max_price}"
+        return f"{self.winner} bids on {self.auction} by {self.price}"
 class Watchlist(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     auction=models.ForeignKey(Auctions,on_delete=models.CASCADE,null=True)
