@@ -46,10 +46,10 @@ h2 {
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 10px;
-  border: 1px solid #feb729;
-  max-width: 450px;
+  border: 0.0625em solid #feb729;
+  max-width: 28.125em;
   width: 50%;
-  min-width: 300px;
+  min-width: 18.75em;
 }
 
 input[type="submit"] {

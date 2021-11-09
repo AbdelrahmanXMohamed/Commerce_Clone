@@ -1,12 +1,15 @@
 body {
   background-color: #fff;
   font-size: 16px; }
-  @media (min-width: 1800px) {
+  @media (min-width: 2000px) {
     body {
       font-size: 24px; } }
   @media (min-width: 3000px) {
     body {
       font-size: 36px; } }
+  @media (min-width: 4500px) {
+    body {
+      font-size: 48px; } }
 
 a {
   color: #feb729; }
@@ -63,5 +66,8 @@ svg {
 
 .sold {
   filter: grayscale(100%); }
+
+.container {
+  max-width: 71.25em; }
 
 /*# sourceMappingURL=styles.css.map */

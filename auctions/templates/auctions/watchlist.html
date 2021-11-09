@@ -37,7 +37,11 @@
         </div>
         <p>Created by {{ data.user.username}}</p>
         <p>Created at {{data.auction.created_at}}</p>
+        {% if data.auction.have_bids %}
+        <p>Current price is {{data.auction.current_price}} $</p>
+        {%else%}
         <p>Starting price {{data.auction.start_price}} $</p>
+        {% endif %}
       </div>
     </div>
     {% empty %}

@@ -9,7 +9,7 @@ ul.categories {
     text-decoration: none; }
   ul.categories a li {
     padding: 10px;
-    border: 1px solid black;
+    border: 0.0625em solid black;
     white-space: nowrap; }
 
 /*# sourceMappingURL=category.css.map */

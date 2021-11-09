@@ -17,7 +17,7 @@ div.frame {
     border-radius: 10px;
     position: relative;
     min-height: 21.875em;
-    box-shadow: inset 0px 0px 8px #00000040; }
+    box-shadow: inset 0px 0px 0.5em #00000040; }
     div.frame div.MyCard img {
       position: absolute;
       top: 1.25em;
